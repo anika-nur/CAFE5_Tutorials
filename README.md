@@ -118,8 +118,7 @@ parameter) for a given data set. Briefly, CAFE5 can:
 
 -   Estimate a phylogeny from gene families or gene sequence
     alignments. CAFE5 also does not convert a phylogeny with
-    branches in expected substitutions per site into a time tree (an
-    ultrametric tree with branch lengths in time units). This task
+    branches in expected substitutions per site into a [time tree](#time-trees). This task
     should be conducted by the user prior to CAFE5 analyses.
 
 -   Implement clustering algorithms that identify (or verify the
@@ -130,6 +129,30 @@ parameter) for a given data set. Briefly, CAFE5 can:
 -   Predict gene family function or infer enrichment of functional
     classes.
 
+### Time Trees
+
+**Ultrametric trees and the interpretability of branch lengths**
+
+CAFE's required tree input is an **ultrametric time tree**. Ultrametric means that the distance
+from each tip to the root is equal. A time tree is one in which the branch lengths are in units of real time (*e.g.* years,
+millions of years). By definition, a proper time tree is ultrametric.
+
+However, there can be ultrametric trees that are not time trees, or that have not properly had divergence times estimated on
+them. For instance, [`phytools::force.ultrametric`](https://search.r-project.org/CRAN/refmans/phytools/html/force.ultrametric.html)
+will take any tree and make it ultrametric. As will 
+[OrthoFinder's `make_ultrametric.py`](https://github.com/davidemms/OrthoFinder/blob/43f9bc7273a33d2e7a4e8d1c55b5117ed7f08a42/tools/make_ultrametric.py#L4).
+These tools will satisfy the **ultrametric** requirement, but not the **time tree** requirement for CAFE.
+
+In other words, if you give either of those tools a tree with branch lengths in coalescent units (*e.g.* from the popular coalescent based tools) or in expected 
+number of substitutions (*e.g.* from popular maxmium likelihood methods), the result will be an ultrametric tree with branch lengths in those units.
+If that tree is then given to CAFE, the results will be uninterpretable: gene gains/losses per coalescent unit or gene gains/losses per expected substitution.
+
+Instead, there are many ways to estimate **divergence times** on a phylogeny to convert it into a time tree, usually from a tree with branch lengths in expected number of substitutions. See
+the [tutorial](docs/tutorial/tutorial.md) for one example using [r8s](https://doi.org/10.1093/bioinformatics/19.2.301) 
+(implemented in R as [ape::chronos](https://search.r-project.org/CRAN/refmans/ape/html/chronos.html)). Confusingly, 
+[OrthoFinder's `make_ultrametric.py`](https://github.com/davidemms/OrthoFinder/blob/43f9bc7273a33d2e7a4e8d1c55b5117ed7f08a42/tools/make_ultrametric.py#L4) does
+allow for converting to branches in real time, but only by a simple scaling factor. This makes the assumption that subsitution rates do not change throughout
+the tree, it does **not** do actual rate or divergence time estimation.
 
 Installation
 ============
@@ -307,8 +330,8 @@ To run this analysis with both lambdas estimated:
 A tutorial is provided in the _docs/tutorial_ directory. It provides 
 instructions on how to generate a reasonable gene family groups
 in the correct format, dated ultrametric trees, and basic CAFE
-analyses. The tutorial contains tutorial.md and some helper
-scripts.
+analyses. The tutorial contains [tutorial](docs/tutorial/tutorial.md) 
+and some helper scripts.
 
 ----
 ### Slow Start
@@ -456,7 +479,6 @@ Parameters
 Input files
 -----------
 
-- 
 - Tree files
 
     A tree file is specified in Newick format.
