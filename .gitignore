@@ -6,6 +6,9 @@
 # Executable
 bin/
 
+# CMake out-of-source build directory
+build/
+
 # Data
 data/
 

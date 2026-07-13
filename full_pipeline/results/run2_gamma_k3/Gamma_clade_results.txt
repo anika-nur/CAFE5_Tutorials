@@ -1,0 +1,10 @@
+#Taxon_ID	Increase	Decrease
+Mycoplasma_hyopneumoniae<1>	10	0
+<9>	3	0
+Mycoplasma_haemocanis<6>	7	138
+Mycoplasma_agalactiae<2>	30	34
+Mycoplasma_arthritidis<3>	17	95
+<10>	1	66
+<11>	6	5
+Mycoplasma_gallisepticum<4>	19	7
+Mycoplasma_genitalium<5>	10	54

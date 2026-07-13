@@ -1,0 +1,11 @@
+# Heavy / regenerable pipeline artifacts -- not committed.
+# The toolchain (conda env, micromamba) and raw working dirs are reproducible
+# from scripts/run_pipeline.sh; only scripts, formatted inputs and final
+# results are tracked.
+mamba/
+mm/
+downloads/
+proteomes/
+orthofinder_out/
+_sanity/
+*.log
